@@ -38,14 +38,15 @@ public class StudentDAOListImple implements StudentDAO{
     }
 
     @Override
-    public Student findByLastName(String lastName) {
+    public List<Student> findByLastName(String lastName) {
+        List<Student> resStudent = new ArrayList<>();
         lastName = lastName.toLowerCase().trim();
         for(Student student : studentList){
             if(student.getLastName().toLowerCase().contains(lastName)){
-                return student;
+                resStudent.add(student);
             }
         }
-        return null;
+        return resStudent;
     }
 
     @Override

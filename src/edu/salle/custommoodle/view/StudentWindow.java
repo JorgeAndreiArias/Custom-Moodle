@@ -118,13 +118,15 @@ public class StudentWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        String id = this.txtId.getText();
-        Student student = studentBLO.find(id);
-        if(student != null){
-            txtName.setText(student.getName());
-            txtLastName.setText(student.getLastName());
-        }
+//        String id = this.txtId.getText();
+//        Student student = studentBLO.find(id);
+//        if(student != null){
+//            txtName.setText(student.getName());
+//            txtLastName.setText(student.getLastName());
+//        }
         // TODO add your handling code here:
+        String lastName= txtLastName.getText().trim();
+        List<Student> studentList = studentBLO.findByLastName(lastName);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void bntRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRefreshActionPerformed
