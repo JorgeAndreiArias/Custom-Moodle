@@ -42,7 +42,7 @@ public class StudentDAOListImple implements StudentDAO{
         List<Student> resStudent = new ArrayList<>();
         lastName = lastName.toLowerCase().trim();
         for(Student student : studentList){
-            if(student.getLastName().toLowerCase().contains(lastName)){
+            if(student.getLastName().toLowerCase().contains(lastName) || student.getName().contains(lastName)){
                 resStudent.add(student);
             }
         }

@@ -127,10 +127,12 @@ public class StudentWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         String lastName= txtLastName.getText().trim();
         List<Student> studentList = studentBLO.findByLastName(lastName);
+        refreshTable(studentList);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void bntRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRefreshActionPerformed
-        refreshTable();
+        
+        refreshTable(studentBLO.finAll());
     }//GEN-LAST:event_bntRefreshActionPerformed
 
     private void clearTable(){
@@ -139,9 +141,8 @@ public class StudentWindow extends javax.swing.JFrame {
             dtm.removeRow(0);
         }
     }
-    private void refreshTable(){
+    private void refreshTable(List<Student> studentList){
         clearTable();
-        List<Student> studentList = studentBLO.finAll();
         DefaultTableModel dtm = (DefaultTableModel) tStudents.getModel();
         Object[] emptyRow = {""};
         
