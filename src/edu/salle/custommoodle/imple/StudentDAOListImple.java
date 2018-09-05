@@ -5,8 +5,13 @@
  */
 package edu.salle.custommoodle.imple;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import edu.salle.custommoodle.dataacess.StudentDAO;
 import edu.salle.custommoodle.model.Student;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +63,33 @@ public class StudentDAOListImple implements StudentDAO{
     public void update(Student student) {
         int pos = studentList.lastIndexOf(student);
         studentList.set(pos, student);
+    }
+
+    @Override
+    public void load() {
+        try{
+            Gson gson =  new Gson();
+            BufferedReader br = new BufferedReader(new FileReader("student.json"));
+            studentList = gson.fromJson(br, new TypeToken<List<Student>>(){}.getType());
+            if(studentList == null){
+                studentList = new ArrayList<>();
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        
+    }
+
+    @Override
+    public void commitChanges() {
+        try{
+            Gson gson = new Gson();
+            FileWriter writer = new FileWriter("student.json");
+            writer.write(gson.toJson(studentList));
+            writer.close();
+        } catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
     
 }

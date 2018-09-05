@@ -41,4 +41,12 @@ public class StudentBLO {
     public void update(Student student){
         studentDAO.update(student);
     }
+    
+    public void load(){
+        studentDAO.load();
+    }
+    
+    public void commitChanges(){
+        studentDAO.commitChanges();
+    }
 }

@@ -22,6 +22,10 @@ public interface StudentDAO {
     
     public void update(Student student);
     
+    public void load();
+    
+    
+    public void commitChanges();
     
     
 }

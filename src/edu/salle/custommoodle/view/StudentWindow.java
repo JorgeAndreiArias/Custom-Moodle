@@ -8,6 +8,7 @@ package edu.salle.custommoodle.view;
 import edu.salle.custommoodle.businesslogic.StudentBLO;
 import edu.salle.custommoodle.model.Student;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +23,7 @@ public class StudentWindow extends javax.swing.JFrame {
     public StudentWindow() {
         setLocationRelativeTo(null);
         initComponents();
+        studentBLO.load();
     }
 
     /**
@@ -46,6 +48,7 @@ public class StudentWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tStudents = new javax.swing.JTable();
         bntRefresh = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -104,6 +107,14 @@ public class StudentWindow extends javax.swing.JFrame {
         });
         getContentPane().add(bntRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, -1, -1));
 
+        btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 450, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -126,14 +137,29 @@ public class StudentWindow extends javax.swing.JFrame {
 //        }
         // TODO add your handling code here:
         String lastName= txtLastName.getText().trim();
-        List<Student> studentList = studentBLO.findByLastName(lastName);
-        refreshTable(studentList);
+        
+        if(!lastName.isEmpty()){
+            List<Student> studentList = studentBLO.findByLastName(lastName);
+            if(!studentList.isEmpty()){
+                refreshTable(studentList);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "You need ti fill the last name");
+        }
+        
+        
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void bntRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRefreshActionPerformed
         
         refreshTable(studentBLO.finAll());
     }//GEN-LAST:event_bntRefreshActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        studentBLO.commitChanges();
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
 
     private void clearTable(){
         DefaultTableModel dtm = (DefaultTableModel) tStudents.getModel();
@@ -160,6 +186,7 @@ public class StudentWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntRefresh;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
