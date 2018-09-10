@@ -8,6 +8,7 @@ package edu.salle.custommoodle.view;
 import edu.salle.custommoodle.businesslogic.StudentBLO;
 import edu.salle.custommoodle.model.Student;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,8 +24,11 @@ public class StudentWindow extends javax.swing.JFrame {
     public StudentWindow() {
         setLocationRelativeTo(null);
         initComponents();
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         studentBLO.load();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,17 +53,19 @@ public class StudentWindow extends javax.swing.JFrame {
         tStudents = new javax.swing.JTable();
         bntRefresh = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Name");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         jLabel2.setText("Last Name");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
-        getContentPane().add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 130, -1));
-        getContentPane().add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 130, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        getContentPane().add(txtLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 130, -1));
+        getContentPane().add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 130, -1));
 
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -78,13 +84,23 @@ public class StudentWindow extends javax.swing.JFrame {
         getContentPane().add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
 
         jLabel3.setText("Id");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, -1, -1));
-        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 90, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, -1, -1));
+        getContentPane().add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 90, -1));
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, -1, -1));
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, -1));
 
         tStudents.setModel(new javax.swing.table.DefaultTableModel(
@@ -115,6 +131,10 @@ public class StudentWindow extends javax.swing.JFrame {
         });
         getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 450, -1, -1));
 
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Andrei\\Downloads\\user (1).png")); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 30));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 490));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -135,7 +155,7 @@ public class StudentWindow extends javax.swing.JFrame {
 //            txtName.setText(student.getName());
 //            txtLastName.setText(student.getLastName());
 //        }
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
         String lastName= txtLastName.getText().trim();
         
         if(!lastName.isEmpty()){
@@ -160,6 +180,24 @@ public class StudentWindow extends javax.swing.JFrame {
         studentBLO.commitChanges();
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        String Name = this.txtName.getText();
+        String LastName = this.txtLastName.getText();
+        Student std = new Student(Name, LastName);
+        std.setId(this.txtId.getText());
+        studentBLO.delete(std);
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        String Name = this.txtName.getText();
+        String LastName = this.txtLastName.getText();
+        Student std = new Student(Name, LastName);
+        std.setId(this.txtId.getText());
+        studentBLO.update(std);
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void clearTable(){
         DefaultTableModel dtm = (DefaultTableModel) tStudents.getModel();
@@ -193,6 +231,8 @@ public class StudentWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tStudents;
     private javax.swing.JTextField txtId;
